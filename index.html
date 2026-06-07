@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn To Be with Mumu - Recurso Educativo Multimedia Interactivo">
+    <title>Learn To Be with Mumu - Recurso Multimedia Interactivo</title>
+    <style>
+        :root {
+            --primary: #2563EB;
+            --primary-hover: #1D4ED8;
+            --secondary: #F59E0B;
+            --success: #10B981;
+            --error: #EF4444;
+            --dark: #1E293B;
+            --light: #F8FAFC;
+            --border: #E2E8F0;
+            --game-bg: #EEF2F6;
+            --nav-bg: #0F172A;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            background-color: #F1F5F9;
+            color: var(--dark);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Encabezado Principal */
+        header {
+            background: linear-gradient(135deg, var(--primary), #1E40AF);
+            color: white;
+            padding: clamp(1.5rem, 4vw, 3rem) 1rem;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
+
+        header h1 {
+            font-size: clamp(1.8rem, 6vw, 3rem);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            opacity: 0.95;
+            font-weight: 300;
+            color: white;
+        }
+
+        /* Barra de Navegación - CORREGIDA */
+        nav {
+            background: var(--nav-bg);
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            padding: 0.5rem;
+            gap: 0.5rem;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        nav button {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            color: #CBD5E1;
+            padding: 0.85rem 1.5rem;
+            font-size: clamp(0.9rem, 2.2vw, 1.05rem);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            border-radius: 8px;
+            min-height: 48px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        nav button:hover {
+            color: white;
+            background: rgba(37, 99, 235, 0.3);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        nav button.active {
+            color: white;
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Contenedor Principal */
+        .main-content {
+            flex: 1;
+            width: 100%;
+            max-width: 100%;
+            padding: clamp(1rem, 3vw, 2rem);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            background: white;
+            padding: clamp(1.5rem, 4vw, 3rem);
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            min-height: calc(100vh - 300px);
+        }
+
+        .section {
+            display: none;
+            width: 100%;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        h2 {
+            color: var(--primary);
+            font-size: clamp(1.5rem, 5vw, 2.2rem);
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid var(--border);
+            padding-bottom: 1rem;
+            text-align: center;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            color: #475569;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            text-align: center;
+        }
+
+        /* Grid de Autores */
+        .grid-creadores {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+            width: 100%;
+        }
+
+        .card {
+            background: var(--light);
+            padding: clamp(1.5rem, 4vw, 2.5rem);
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid var(--border);
+            border-top: 4px solid var(--secondary);
+            font-weight: 700;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Imagen Responsive */
+        .image-container {
+            width: 100%;
+            margin: 2rem 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .responsive-img {
+            max-width: 100%;
+            width: auto;
+            height: auto;
+            max-height: 500px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            display: block;
+            object-fit: contain;
+        }
+
+        /* Contenedor de Video */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            background: #000;
+            border-radius: 12px;
+            margin: 2rem 0;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Tabla Teórica */
+        .table-container {
+            overflow-x: auto;
+            margin: 2rem 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        table th,
+        table td {
+            padding: clamp(0.875rem, 2vw, 1.25rem);
+            border: 1px solid var(--border);
+            text-align: center;
+            font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+        }
+
+        table th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        table tr:nth-child(even) {
+            background-color: var(--light);
+        }
+
+        table tr:hover {
+            background-color: #E0F2FE;
+        }
+
+        /* INTERFAZ ESTILO VIDEOJUEGO */
+        .game-card {
+            background: var(--game-bg);
+            border: 3px solid var(--dark);
+            border-radius: 16px;
+            padding: clamp(1.5rem, 4vw, 2.5rem);
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 8px 0px var(--dark);
+        }
+
+        .input-name {
+            width: 100%;
+            padding: clamp(1rem, 3vw, 1.5rem);
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            transition: border-color 0.3s;
+        }
+
+        .input-name:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .btn-game {
+            background: var(--secondary);
+            color: var(--dark);
+            font-weight: bold;
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            padding: clamp(1rem, 3vw, 1.5rem) 2rem;
+            border: 2px solid var(--dark);
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 var(--dark);
+            width: 100%;
+            transition: all 0.1s ease;
+        }
+
+        .btn-game:active {
+            transform: translateY(4px);
+            box-shadow: 0 0px 0 var(--dark);
+        }
+
+        .btn-game:hover {
+            background: #FBBF24;
+        }
+
+        .game-status {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+            font-size: clamp(0.95rem, 2.5vw, 1.2rem);
+            background: white;
+            padding: clamp(0.875rem, 2vw, 1.25rem);
+            border-radius: 8px;
+            border: 2px solid var(--dark);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .hearts {
+            color: var(--error);
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+        }
+
+        .progress-container {
+            background: #E2E8F0;
+            border-radius: 10px;
+            height: 14px;
+            width: 100%;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            border: 2px solid var(--dark);
+        }
+
+        .progress-bar {
+            background: var(--success);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .question-box {
+            background: white;
+            padding: clamp(1.5rem, 4vw, 2rem);
+            border-radius: 12px;
+            border: 2px solid var(--dark);
+            margin-bottom: 1.5rem;
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .game-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .btn-option {
+            background: white;
+            border: 2px solid var(--dark);
+            padding: clamp(1rem, 3vw, 1.5rem);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            text-align: left;
+            font-weight: 500;
+            box-shadow: 0 3px 0 var(--dark);
+            transition: all 0.1s ease;
+        }
+
+        .btn-option:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px 0 var(--dark);
+        }
+
+        .btn-option:hover {
+            background: #F8FAFC;
+        }
+
+        .btn-option.correct {
+            background: #A7F3D0 !important;
+            border-color: var(--success);
+        }
+
+        .btn-option.wrong {
+            background: #FCA5A5 !important;
+            border-color: var(--error);
+        }
+
+        footer {
+            background: var(--dark);
+            color: #94A3B8;
+            text-align: center;
+            padding: clamp(1rem, 3vw, 1.5rem);
+            width: 100%;
+            font-size: clamp(0.85rem, 2vw, 1rem);
+            margin-top: auto;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Media Queries para móviles */
+        @media (max-width: 768px) {
+            nav {
+                padding: 0.5rem;
+                gap: 0.35rem;
+            }
+
+            nav button {
+                padding: 0.7rem 1rem;
+                font-size: 0.85rem;
+                flex: 1 1 auto;
+                min-width: 0;
+            }
+
+            .game-status {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .container {
+                padding: 1.5rem;
+            }
+
+            .grid-creadores {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                flex-wrap: wrap;
+            }
+
+            nav button {
+                flex: 1 1 calc(50% - 0.5rem);
+                font-size: 0.8rem;
+                padding: 0.6rem 0.5rem;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .game-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .grid-creadores {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Learn To Be with Mumu 🐧</h1>
+        <p>Recurso Educativo Multimedia Interactivo</p>
+    </header>
+
+    <nav>
+        <button onclick="switchView('inicio')" id="nav-inicio" class="active">🏠 Inicio</button>
+        <button onclick="switchView('clase')" id="nav-clase">🎬 Clase en Video</button>
+        <button onclick="switchView('leccion')" id="nav-leccion">📚 Resumen Gramatical</button>
+        <button onclick="switchView('juego')" id="nav-juego">🕹️ ¡Jugar Mumu Quiz!</button>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+
+            <div id="inicio" class="section active">
+                <h2>Propósito del Recurso</h2>
+                <p>Este portal multimedia asiste en la adquisición pedagógica del <strong>Verbo To Be</strong>. Combina
+                    explicaciones guiadas con un entorno de juego aleatorizado para fomentar el aprendizaje activo
+                    autónomo.
+                </p>
+
+                <h3
+                    style="margin-top: 2rem; color: var(--dark); text-align: center; font-size: clamp(1.2rem, 3vw, 1.5rem);">
+                    Equipo de Creadores:</h3>
+                <div class="grid-creadores">
+                    <div class="card">Luis Alberto Montero</div>
+                    <div class="card">Wilfran Luis Decena</div>
+                </div>
+
+                <div class="image-container">
+                    <img src="imagen.gif" alt="Mascota Mumu - Aprende inglés de forma divertida" class="responsive-img"
+                        loading="lazy">
+                </div>
+            </div>
+
+            <div id="clase" class="section">
+                <h2>Clase Audiovisual Animada</h2>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/KRyK79yP0oA?rel=0&modestbranding=1"
+                        title="Clase sobre el Verbo To Be con Mumu"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+
+            <div id="leccion" class="section">
+                <h2>Estructuras del Presente Simple</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Pronombre</th>
+                                <th>Verbo To Be</th>
+                                <th>Contracción</th>
+                                <th>Significado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>I</td>
+                                <td>am</td>
+                                <td>I'm</td>
+                                <td>Soy / Estoy</td>
+                            </tr>
+                            <tr>
+                                <td>You</td>
+                                <td>are</td>
+                                <td>You're</td>
+                                <td>Eres / Estás / Son</td>
+                            </tr>
+                            <tr>
+                                <td>He / She / It</td>
+                                <td>is</td>
+                                <td>He's / She's / It's</td>
+                                <td>Él, Ella, Eso es/está</td>
+                            </tr>
+                            <tr>
+                                <td>We / They</td>
+                                <td>are</td>
+                                <td>We're / They're</td>
+                                <td>Somos, Son / Estamos, Están</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="juego" class="section">
+                <h2>Desafío: Mumu Game Challenge</h2>
+                <p>Pon a prueba tu agilidad mental en el inglés. Regístrate, responde 10 preguntas aleatorias del banco
+                    de
+                    datos y conserva tus vidas.</p>
+
+                <div class="game-card">
+                    <div id="screen-login">
+                        <h3 style="text-align: center; margin-bottom: 1rem; font-size: clamp(1.2rem, 3vw, 1.5rem);">
+                            Introduce tu Nombre para comenzar:</h3>
+                        <input type="text" id="player-name" class="input-name" placeholder="Ej. Juan Pérez"
+                            maxlength="20">
+                        <button class="btn-game" onclick="startGame()">¡EMPEZAR A JUGAR! 🚀</button>
+                    </div>
+
+                    <div id="screen-game" style="display: none;">
+                        <div class="game-status">
+                            <div>Jugador: <span id="lbl-name" style="color:var(--primary)"></span></div>
+                            <div>Pregunta: <span id="lbl-question-num">1</span>/10</div>
+                            <div class="hearts">Vidas: <span id="lbl-hearts">❤️❤️❤️</span></div>
+                        </div>
+
+                        <div class="progress-container">
+                            <div id="game-progress" class="progress-bar"></div>
+                        </div>
+
+                        <div id="box-question" class="question-box">Cargando pregunta...</div>
+                        <div id="box-options" class="game-options"></div>
+                    </div>
+
+                    <div id="screen-results" style="display: none; text-align: center;">
+                        <h3 id="res-greeting" style="font-size: clamp(1.4rem, 4vw, 1.8rem); margin-bottom: 1rem;">¡Juego
+                            Terminado!</h3>
+                        <p id="res-score"
+                            style="font-size: clamp(1.2rem, 3vw, 1.5rem); font-weight: bold; margin-bottom: 1.5rem;">
+                        </p>
+                        <button class="btn-game" onclick="resetGame()">🔄 Jugar Otra Vez (Nuevas Preguntas)</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 - Diseñado por Luis Alberto Montero y Wilfran Luis Decena | Entornos Virtuales de Aprendizaje
+    </footer>
+
+    <script>
+        const questionBank = [
+            { q: 'He ___ a good student.', o: ['am', 'are', 'is'], c: 'is' },
+            { q: 'She ___ my teacher.', o: ['am', 'is', 'are'], c: 'is' },
+            { q: 'I ___ learning English.', o: ['am', 'is', 'are'], c: 'am' },
+            { q: 'It ___ time for recess.', o: ['are', 'is', 'am'], c: 'is' },
+            { q: 'We ___ learning about science.', o: ['are', 'is', 'am'], c: 'are' },
+            { q: 'You ___ doing your homework.', o: ['is', 'am', 'are'], c: 'are' },
+            { q: 'They ___ my classmates.', o: ['are', 'is', 'am'], c: 'are' },
+            { q: 'I am a student. Aquí "am" significa:', o: ['Estoy', 'Soy'], c: 'Soy' },
+            { q: 'La contracción correcta de "I am" es:', o: ['I\'s', 'I\'re', 'I\'m'], c: 'I\'m' },
+            { q: 'La contracción correcta de "You are" es:', o: ['You\'s', 'You\'re', 'You\'m'], c: 'You\'re' },
+            { q: 'La contracción correcta de "He is" es:', o: ['He\'re', 'He\'s', 'He\'m'], c: 'He\'s' },
+            { q: 'La contracción de "She is" es:', o: ['She\'re', 'She\'s', 'She\'m'], c: 'She\'s' },
+            { q: 'La contracción de "It is" es:', o: ['It\'s', 'It\'re', 'It\'m'], c: 'It\'s' },
+            { q: 'La contracción de "We are" es:', o: ['We\'s', 'We\'m', 'We\'re'], c: 'We\'re' },
+            { q: 'La contracción de "They are" es:', o: ['They\'s', 'They\'re', 'They\'m'], c: 'They\'re' },
+            { q: 'El verbo To Be en presente simple tiene ___ formas.', o: ['dos', 'tres', 'cuatro'], c: 'tres' },
+            { q: '¿Qué formas toma el verbo To Be?', o: ['Do/Does', 'Am/Are/Is', 'Have/Has'], c: 'Am/Are/Is' },
+            { q: 'El verbo To Be significa en español:', o: ['Hacer o Tener', 'Ser o Estar', 'Ir o Venir'], c: 'Ser o Estar' },
+            { q: 'Mumu menciona que sin el pronombre, la frase queda:', o: ['Perfecta', 'Incompleta y sin sentido', 'Más corta'], c: 'Incompleta y sin sentido' },
+            { q: 'Complete: "They ___ happy today."', o: ['is', 'am', 'are'], c: 'are' },
+            { q: 'Complete: "It ___ a beautiful dog."', o: ['is', 'are', 'am'], c: 'is' },
+            { q: 'Complete: "You ___ my best friend."', o: ['am', 'is', 'are'], c: 'are' },
+            { q: 'Complete: "She ___ in the school."', o: ['is', 'are', 'am'], c: 'is' },
+            { q: 'Complete: "I ___ very happy."', o: ['is', 'am', 'are'], c: 'am' },
+            { q: 'Complete: "We ___ excellent teachers."', o: ['are', 'is', 'am'], c: 'are' },
+            { q: 'Complete: "He ___ an intelligent boy."', o: ['are', 'am', 'is'], c: 'is' },
+            { q: '¿Cuál oración usa correctamente el verbo?', o: ['I is a doctor', 'You am a doctor', 'She is a doctor'], c: 'She is a doctor' },
+            { q: '¿Cuál opción es una contracción válida?', o: ['You\'m', 'We\'re', 'He\'re'], c: 'We\'re' },
+            { q: 'Para saber si significa "ser" o "estar" dependemos del:', o: ['Verbo', 'Contexto', 'Pronombre'], c: 'Contexto' },
+            { q: 'Complete: "Mumu ___ my friend."', o: ['is', 'are', 'am'], c: 'is' }
+        ];
+
+        let gameQuestions = [];
+        let currentIdx = 0;
+        let score = 0;
+        let lives = 3;
+        let pName = "";
+
+        function switchView(id) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            document.getElementById('nav-' + id).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function startGame() {
+            const input = document.getElementById('player-name');
+            pName = input.value.trim();
+            if (!pName) {
+                alert("¡Por favor ingresa tu nombre para registrar tu partida!");
+                input.focus();
+                return;
+            }
+
+            document.getElementById('lbl-name').innerText = pName;
+            document.getElementById('screen-login').style.display = 'none';
+            document.getElementById('screen-game').style.display = 'block';
+
+            const shuffled = [...questionBank].sort(() => 0.5 - Math.random());
+            gameQuestions = shuffled.slice(0, 10);
+
+            currentIdx = 0;
+            score = 0;
+            lives = 3;
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            document.getElementById('lbl-question-num').innerText = currentIdx + 1;
+            document.getElementById('lbl-hearts').innerText = "❤️".repeat(lives);
+            document.getElementById('game-progress').style.width = `${(currentIdx / 10) * 100}%`;
+
+            if (lives <= 0 || currentIdx >= 10) {
+                endGame();
+                return;
+            }
+
+            const currentQ = gameQuestions[currentIdx];
+            document.getElementById('box-question').innerText = currentQ.q;
+
+            const optionsBox = document.getElementById('box-options');
+            optionsBox.innerHTML = "";
+
+            currentQ.o.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = "btn-option";
+                btn.innerText = opt;
+                btn.onclick = () => checkGameAnswer(opt, btn);
+                optionsBox.appendChild(btn);
+            });
+        }
+
+        function checkGameAnswer(chosen, btnElement) {
+            const currentQ = gameQuestions[currentIdx];
+            const allButtons = document.getElementById('box-options').querySelectorAll('.btn-option');
+
+            allButtons.forEach(b => b.disabled = true);
+
+            if (chosen === currentQ.c) {
+                score++;
+                btnElement.classList.add('correct');
+            } else {
+                lives--;
+                btnElement.classList.add('wrong');
+                allButtons.forEach(b => {
+                    if (b.innerText === currentQ.c) b.classList.add('correct');
+                });
+            }
+
+            setTimeout(() => {
+                currentIdx++;
+                renderQuestion();
+            }, 1500);
+        }
+
+        function endGame() {
+            document.getElementById('screen-game').style.display = 'none';
+            document.getElementById('screen-results').style.display = 'block';
+
+            const greeting = document.getElementById('res-greeting');
+            const scoreText = document.getElementById('res-score');
+
+            if (lives <= 0) {
+                greeting.innerText = `💥 ¡Te quedaste sin vidas, ${pName}!`;
+                scoreText.style.color = "var(--error)";
+            } else {
+                greeting.innerText = `🏆 ¡Excelente trabajo, ${pName}!`;
+                scoreText.style.color = "var(--success)";
+            }
+            scoreText.innerText = `Puntuación: ${score} / 10 respuestas correctas (${score * 10} puntos).`;
+        }
+
+        function resetGame() {
+            document.getElementById('screen-results').style.display = 'none';
+            document.getElementById('screen-login').style.display = 'block';
+            document.getElementById('player-name').value = "";
+        }
+    </script>
+</body>
+
+</html>
